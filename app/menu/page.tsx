@@ -1,8 +1,12 @@
 "use client";
 
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
+import { ArrowDown, Coffee, UtensilsCrossed, Cake, Download } from "lucide-react";
 
+// --- Tipe Data ---
 interface MenuItem {
   name: string;
   description: string;
@@ -10,56 +14,54 @@ interface MenuItem {
 }
 
 interface MenuCategory {
+  id: string;
   title: string;
   subtitle?: string;
   items: MenuItem[];
 }
 
+// --- Data Menu ---
 const menuData: MenuCategory[] = [
   {
-    title: "Signature",
+    id: "main-course", // ID tanpa spasi untuk anchor link yang valid
+    title: "Main Course",
     subtitle: "Cita Rasa Khas",
     items: [
       {
         name: "Ayam Goreng Laos Sambal Mangga",
-        description:
-          "Ayam kampung goreng dengan bumbu laos rempah pilihan, disajikan dengan sambal mangga segar yang pedas-manis",
+        description: "Ayam kampung goreng dengan bumbu laos rempah pilihan, disajikan dengan sambal mangga segar yang pedas-manis",
         price: "Rp 45.000",
       },
       {
         name: "Bebek Goreng Laos Sambal Mangga",
-        description:
-          "Bebek goreng khas dengan bumbu laos yang meresap hingga tulang, dilengkapi sambal mangga istimewa",
+        description: "Bebek goreng khas dengan bumbu laos yang meresap hingga tulang, dilengkapi sambal mangga istimewa",
         price: "Rp 55.000",
       },
       {
         name: "Ayam Goreng Laos + Nasi",
-        description:
-          "Paket lengkap ayam goreng laos dengan nasi putih hangat, sambal mangga, dan lalapan segar",
+        description: "Paket lengkap ayam goreng laos dengan nasi putih hangat, sambal mangga, dan lalapan segar",
         price: "Rp 52.000",
       },
       {
         name: "Bebek Goreng Laos + Nasi",
-        description:
-          "Paket bebek goreng laos dengan nasi putih, sambal mangga, lalapan, dan sambal terasi",
+        description: "Paket bebek goreng laos dengan nasi putih, sambal mangga, lalapan, dan sambal terasi",
         price: "Rp 62.000",
       },
     ],
   },
   {
+    id: "breakfast",
     title: "Breakfast",
     subtitle: "Sarapan Pagi",
     items: [
       {
         name: "Nasi Uduk Komplit",
-        description:
-          "Nasi uduk hangat dengan ayam suwir, telur balado, tempe orek, sambal, dan kerupuk",
+        description: "Nasi uduk hangat dengan ayam suwir, telur balado, tempe orek, sambal, dan kerupuk",
         price: "Rp 28.000",
       },
       {
         name: "Bubur Ayam Cianjur",
-        description:
-          "Bubur ayam dengan kuah kuning gurih, suwiran ayam, cakwe, dan kerupuk",
+        description: "Bubur ayam dengan kuah kuning gurih, suwiran ayam, cakwe, dan kerupuk",
         price: "Rp 25.000",
       },
       {
@@ -69,8 +71,7 @@ const menuData: MenuCategory[] = [
       },
       {
         name: "Pancake Pisang",
-        description:
-          "Pancake lembut dengan irisan pisang, madu, dan taburan almond",
+        description: "Pancake lembut dengan irisan pisang, madu, dan taburan almond",
         price: "Rp 22.000",
       },
       {
@@ -81,25 +82,23 @@ const menuData: MenuCategory[] = [
     ],
   },
   {
+    id: "dessert",
     title: "Dessert",
     subtitle: "Manis Penutup",
     items: [
       {
         name: "Es Teler Nusantara",
-        description:
-          "Alpukat, kelapa muda, nangka, dengan kuah susu dan sirup gula merah",
+        description: "Alpukat, kelapa muda, nangka, dengan kuah susu dan sirup gula merah",
         price: "Rp 22.000",
       },
       {
         name: "Puding Mangga Sutra",
-        description:
-          "Puding sutra lembut dengan lapisan mangga segar dan saus vanila",
+        description: "Puding sutra lembut dengan lapisan mangga segar dan saus vanila",
         price: "Rp 20.000",
       },
       {
         name: "Klepon Gula Merah",
-        description:
-          "Klepon tradisional isi gula merah cair dengan taburan kelapa parut",
+        description: "Klepon tradisional isi gula merah cair dengan taburan kelapa parut",
         price: "Rp 15.000",
       },
       {
@@ -109,13 +108,13 @@ const menuData: MenuCategory[] = [
       },
       {
         name: "Pisang Goreng Madu",
-        description:
-          "Pisang goreng renyah dengan siraman madu dan taburan wijen",
+        description: "Pisang goreng renyah dengan siraman madu dan taburan wijen",
         price: "Rp 18.000",
       },
     ],
   },
   {
+    id: "kopi",
     title: "Kopi",
     subtitle: "Seduh & Nikmati",
     items: [
@@ -126,20 +125,17 @@ const menuData: MenuCategory[] = [
       },
       {
         name: "Es Kopi Susu Boyolali",
-        description:
-          "Signature iced coffee dengan perpaduan susu segar dan gula aren",
+        description: "Signature iced coffee dengan perpaduan susu segar dan gula aren",
         price: "Rp 22.000",
       },
       {
         name: "Kopi Hitam V60",
-        description:
-          "V60 pour over dengan biji kopi arabika pilihan, aroma floral dan fruity",
+        description: "V60 pour over dengan biji kopi arabika pilihan, aroma floral dan fruity",
         price: "Rp 28.000",
       },
       {
         name: "Kopi Susu Gula Aren",
-        description:
-          "Perpaduan espresso dengan susu steamed dan gula aren cair",
+        description: "Perpaduan espresso dengan susu steamed dan gula aren cair",
         price: "Rp 24.000",
       },
       {
@@ -156,334 +152,148 @@ const menuData: MenuCategory[] = [
   },
 ];
 
-export default function MenuSection() {
-  const sectionRef = useRef<HTMLElement>(null);
+export default function MenuPage() {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  // Animasi fade-in saat halaman dimuat
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
+    setIsVisible(true);
   }, []);
 
+  // Fungsi smooth scroll ke kategori
+  const scrollToCategory = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      // Offset untuk header fixed
+      const headerOffset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   return (
-    <section
-      id="menu"
-      ref={sectionRef}
-      style={{
-        position: "relative",
-        width: "100%",
-        // Hapus minHeight 100vh dari container utama agar scroll natural
-        background: "#3A2318",
-      }}
-    >
-      {/* 
-         LAYER 1: STICKY VIDEO BACKGROUND 
-         Menggunakan position: fixed agar tetap di tempat saat scroll
-      */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100vh",
-          zIndex: 0, // Paling bawah
-          overflow: "hidden",
-        }}
-      >
+    <main className="bg-[#3A2318] text-[#FAF7F2] min-h-screen font-montserrat relative">
+      
+      {/* LAYER 1: STICKY VIDEO BACKGROUND */}
+      <div className="fixed top-0 left-0 w-full h-screen z-0 overflow-hidden">
         <video
           autoPlay
           muted
           loop
           playsInline
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
+          className="w-full h-full object-cover object-center"
         >
           <source src="/menu.mp4" type="video/mp4" />
         </video>
-
-        {/* Overlay */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(0,0,0,0.5)",
-          }}
-        />
-
-        {/* Subtle warm tint */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(58, 35, 24, 0.2)",
-          }}
-        />
+        {/* Overlay Gelap */}
+        <div className="absolute inset-0 bg-black/50" />
+        {/* Warm Tint */}
+        <div className="absolute inset-0 bg-[#3A2318]/20" />
       </div>
 
-      {/* 
-         LAYER 2: HEADER (Sticky/Fixed di atas video)
-      */}
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          zIndex: 50,
-        }}
-      >
+      {/* LAYER 2: HEADER (Fixed di atas video) */}
+      <div className="fixed top-0 left-0 w-full z-50">
         <Header />
       </div>
 
-      {/* 
-         LAYER 3: SCROLLABLE CONTENT 
-         Posisi relative agar mengalir di atas video fixed
-      */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 10,
-          paddingTop: "100px", // Memberi jarak dari Header
-          paddingBottom: "6rem",
-          paddingLeft: "1.5rem",
-          paddingRight: "1.5rem",
-        }}
+      {/* LAYER 3: SCROLLABLE CONTENT */}
+      <div 
+        ref={contentRef}
+        className="relative z-10"
       >
-        {/* Section Header */}
-        <div
-          style={{
-            textAlign: "center",
-            marginBottom: "5rem",
-            marginTop: "2rem",
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? "translateY(0)" : "translateY(30px)",
-            transition: "all 1s ease-out",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "10px",
-              letterSpacing: "0.35em",
-              textTransform: "uppercase",
-              color: "#C9A96E",
-              opacity: 0.9,
-              marginBottom: "1.5rem",
-              fontWeight: 400,
-            }}
-          >
-            Menu Kami
-          </p>
-
-          {/* Divider */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "1rem",
-              margin: "0 auto 1.5rem",
-              width: "200px",
-              maxWidth: "60vw",
-            }}
-          >
-            <div
-              style={{
-                flex: 1,
-                height: "0.5px",
-                background: "rgba(201,169,110,0.5)",
-              }}
-            />
-            <div
-              style={{
-                width: "5px",
-                height: "5px",
-                border: "0.5px solid #C9A96E",
-                transform: "rotate(45deg)",
-              }}
-            />
-            <div
-              style={{
-                flex: 1,
-                height: "0.5px",
-                background: "rgba(201,169,110,0.5)",
-              }}
-            />
+        
+        {/* HERO SECTION MENU */}
+        <div className={`min-h-screen flex flex-col items-center justify-center px-6 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          
+          <div className="text-center mb-10">
+            <p className="text-[#C9A96E] text-[15px] tracking-[0.35em] uppercase font-medium">
+              Jelajahi Rasa
+            </p>
+            
+            {/* <h1 className="font-['Cormorant_Garamond'] text-5xl md:text-7xl font-light italic text-[#FAF7F2] mb-2">
+              Cita Rasa Sejati
+            </h1> */}
           </div>
 
-          <h2
-            style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: "clamp(32px, 6vw, 52px)",
-              fontWeight: 300,
-              letterSpacing: "0.05em",
-              color: "#FAF7F2",
-              marginBottom: "0.75rem",
-              lineHeight: 1.2,
-            }}
-          >
-            Cita Rasa Sejati
-          </h2>
-          <p
-            style={{
-              fontFamily: "'Cormorant Garamond', Georgia, serif",
-              fontSize: "clamp(14px, 2.5vw, 18px)",
-              fontWeight: 300,
-              fontStyle: "italic",
-              color: "rgba(250,247,242,0.6)",
-              letterSpacing: "0.05em",
-            }}
-          >
-            Dari dapur kami, untuk meja Anda
-          </p>
+          {/* Category CTAs - Style disesuaikan dengan tombol Download */}
+          <div className="flex flex-col md:flex-row flex-wrap justify-center gap-4 md:gap-6 mb-12 max-w-4xl mx-auto">
+            <button 
+              onClick={() => scrollToCategory('main-course')}
+              className="inline-flex items-center justify-center gap-3 border border-[#C9A96E] text-[#C9A96E] font-['Montserrat'] text-[10px] tracking-[0.25em] uppercase font-bold py-4 px-8 hover:bg-[#C9A96E] hover:text-[#3A2318] transition-all duration-300 min-w-40"
+            >
+              <UtensilsCrossed size={16} />
+              Main Course
+            </button>
+            
+            <button 
+              onClick={() => scrollToCategory('breakfast')}
+              className="inline-flex items-center justify-center gap-3 border border-[#C9A96E] text-[#C9A96E] font-['Montserrat'] text-[10px] tracking-[0.25em] uppercase font-bold py-4 px-8 hover:bg-[#C9A96E] hover:text-[#3A2318] transition-all duration-300 min-w-40"
+            >
+              <Coffee size={16} />
+              Breakfast
+            </button>
+
+            <button 
+              onClick={() => scrollToCategory('dessert')}
+              className="inline-flex items-center justify-center gap-3 border border-[#C9A96E] text-[#C9A96E] font-['Montserrat'] text-[10px] tracking-[0.25em] uppercase font-bold py-4 px-8 hover:bg-[#C9A96E] hover:text-[#3A2318] transition-all duration-300 min-w-40"
+            >
+              <Cake size={16} />
+              Dessert
+            </button>
+          </div>
+
+          {/* Animated Scroll Down Indicator */}
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-bounce opacity-80 cursor-pointer" onClick={() => scrollToCategory('main-course')}>
+            <span className="text-[10px] tracking-[0.2em] uppercase text-[#C9A96E] font-medium">Lihat Menu</span>
+            <ArrowDown size={24} className="text-[#C9A96E]" strokeWidth={1.5} />
+          </div>
         </div>
 
-        {/* Menu Categories */}
-        <div
-          style={{
-            maxWidth: "800px",
-            margin: "0 auto",
-            display: "flex",
-            flexDirection: "column",
-            gap: "4rem",
-          }}
-        >
+        {/* DAFTAR MENU (List) - Diberi jarak atas agar tidak terlalu mepet */}
+        <div className="max-w-4xl mx-auto px-6 md:px-12 space-y-32 pb-20 pt-12">
           {menuData.map((category, catIndex) => (
             <div
-              key={category.title}
-              style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? "translateY(0)" : "translateY(40px)",
-                transition: `all 0.8s ease-out ${catIndex * 0.15}s`,
-                // Opsional: Tambahkan background sedikit pada kartu kategori jika ingin kontras lebih
-                // backgroundColor: "rgba(26, 15, 10, 0.3)",
-                // padding: "2rem",
-                // borderRadius: "8px",
-                // backdropFilter: "blur(4px)",
-              }}
+              key={category.id}
+              id={category.id}
+              className={`scroll-mt-24 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${catIndex * 0.1}s` }}
             >
-              {/* Category Title */}
-              <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-                <h3
-                  style={{
-                    fontFamily: "'Cormorant Garamond', Georgia, serif",
-                    fontSize: "clamp(24px, 4vw, 36px)",
-                    fontWeight: 400,
-                    color: "#C9A96E",
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    marginBottom: "0.5rem",
-                  }}
-                >
+              {/* Header Kategori */}
+              <div className="text-center mb-12">
+                <h2 className="font-['Cormorant_Garamond'] text-4xl md:text-5xl text-[#C9A96E] uppercase tracking-widest mb-3">
                   {category.title}
-                </h3>
+                </h2>
                 {category.subtitle && (
-                  <p
-                    style={{
-                      fontFamily: "'Cormorant Garamond', Georgia, serif",
-                      fontSize: "clamp(13px, 2vw, 15px)",
-                      fontWeight: 300,
-                      fontStyle: "italic",
-                      color: "rgba(250,247,242,0.5)",
-                      letterSpacing: "0.1em",
-                    }}
-                  >
+                  <p className="font-['Cormorant_Garamond'] text-lg italic text-white/50 tracking-wide">
                     {category.subtitle}
                   </p>
                 )}
-                <div
-                  style={{
-                    width: "40px",
-                    height: "0.5px",
-                    background: "rgba(201,169,110,0.4)",
-                    margin: "1rem auto 0",
-                  }}
-                />
+                <div className="w-16 h-px bg-[#C9A96E]/40 mx-auto mt-6"></div>
               </div>
 
-              {/* Menu Items */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1.75rem",
-                }}
-              >
+              {/* Item List */}
+              <div className="flex flex-col gap-6 max-w-2xl mx-auto">
                 {category.items.map((item, itemIndex) => (
                   <div
                     key={item.name}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      gap: "1.5rem",
-                      paddingBottom: "1.75rem",
-                      borderBottom:
-                        itemIndex < category.items.length - 1
-                          ? "0.5px solid rgba(201,169,110,0.15)"
-                          : "none",
-                    }}
+                    className="flex justify-between items-baseline gap-4 pb-4 border-b border-[#C9A96E]/15 last:border-0 group hover:bg-white/5 p-2 rounded-lg transition-colors"
                   >
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <h4
-                        style={{
-                          fontFamily: "'Montserrat', sans-serif",
-                          fontSize: "clamp(13px, 2vw, 15px)",
-                          fontWeight: 500,
-                          color: "#FAF7F2",
-                          letterSpacing: "0.05em",
-                          marginBottom: "0.5rem",
-                          lineHeight: 1.4,
-                        }}
-                      >
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-['Montserrat'] text-sm md:text-base font-medium text-[#FAF7F2] mb-1 leading-snug group-hover:text-[#C9A96E] transition-colors">
                         {item.name}
                       </h4>
-                      <p
-                        style={{
-                          fontFamily: "'Cormorant Garamond', Georgia, serif",
-                          fontSize: "clamp(13px, 1.8vw, 15px)",
-                          fontWeight: 300,
-                          color: "rgba(250,247,242,0.55)",
-                          lineHeight: 1.6,
-                          fontStyle: "italic",
-                        }}
-                      >
+                      <p className="font-['Cormorant_Garamond'] text-sm italic text-white/55 leading-relaxed">
                         {item.description}
                       </p>
                     </div>
-                    <div
-                      style={{
-                        flexShrink: 0,
-                        textAlign: "right",
-                        paddingTop: "0.25rem",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: "'Montserrat', sans-serif",
-                          fontSize: "clamp(12px, 1.8vw, 14px)",
-                          fontWeight: 400,
-                          color: "#C9A96E",
-                          letterSpacing: "0.05em",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                    <div className="shrink-0 text-right pt-1">
+                      <span className="font-['Montserrat'] text-sm text-[#C9A96E] whitespace-nowrap font-medium">
                         {item.price}
                       </span>
                     </div>
@@ -494,18 +304,27 @@ export default function MenuSection() {
           ))}
         </div>
 
-        {/* Bottom Note */}
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: "5rem",
-            paddingTop: "3rem",
-            borderTop: "0.5px solid rgba(201,169,110,0.15)",
-            opacity: isVisible ? 1 : 0,
-            transition: "opacity 1s ease-out 0.8s",
-          }}
-        ></div>
+        {/* DOWNLOAD MENU CTA (Placeholder) */}
+        <div className={`text-center py-12 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.8s' }}>
+          <Link
+            href="/menu-placeholder.pdf" // Ganti dengan path PDF asli nanti
+            download
+            className="inline-flex items-center gap-3 border border-[#C9A96E] text-[#C9A96E] font-['Montserrat'] text-[10px] tracking-[0.25em] uppercase font-bold py-4 px-10 hover:bg-[#C9A96E] hover:text-[#3A2318] transition-all duration-300"
+          >
+            <Download size={16} />
+            Download Full Menu
+          </Link>
+        </div>
+
       </div>
-    </section>
+
+      {/* FOOTER DENGAN EFEK STACKING */}
+      <div className="stack-container relative z-20">
+        <div className="stack-slide" style={{ zIndex: 1 }}>
+          <Footer />
+        </div>
+      </div>
+
+    </main>
   );
 }

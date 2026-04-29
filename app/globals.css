@@ -1,3 +1,7 @@
+/* 1. Import Font HARUS di paling atas */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+/* 2. Import Tailwind */
 @import "tailwindcss";
 
 :root {
@@ -23,4 +27,504 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 3. Keyframes & Custom Classes */
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.stack-container {
+  position: relative;
+}
+
+.stack-slide {
+  position: sticky;
+  top: 0;
+  isolation: isolate;
+}
+
+/* Section non-hero butuh min-height agar sticky bekerja */
+.stack-slide:not(:first-child) > * {
+  min-height: 100vh;
+}
+
+/* Footer tidak perlu full height */
+.stack-slide:last-child > * {
+  min-height: unset;
+}
+
+/* Utility class untuk font Montserrat */
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Burger Menu */
+.mmt-burger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  width: 48px;
+  height: 48px;
+}
+.mmt-burger span {
+  display: block;
+  height: 1px;
+  background: #C9A96E;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1),
+              opacity 0.2s ease,
+              width 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.mmt-burger span:nth-child(1) { width: 40px; }
+.mmt-burger span:nth-child(2) { width: 28px; }
+.mmt-burger span:nth-child(3) { width: 34px; }
+.mmt-burger.open span:nth-child(1) {
+  width: 36px;
+  transform: translateY(8px) rotate(45deg);
+}
+.mmt-burger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.mmt-burger.open span:nth-child(3) {
+  width: 36px;
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* CTA Header (Desktop) */
+.mmt-cta-header {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #3A2318;
+  background: #C9A96E;
+  padding: 10px 22px;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.25s, opacity 0.3s ease, visibility 0.3s ease;
+}
+.mmt-cta-header:hover { background: #F5F0E8; }
+.mmt-cta-header.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+/* Sembunyikan CTA header di mobile */
+@media (max-width: 640px) {
+  .mmt-cta-header { display: none; }
+}
+
+/* Drawer */
+.mmt-drawer {
+  position: fixed;
+  top: 0; right: 0;
+  width: min(340px, 85vw);
+  height: 100vh;
+  background: #1E0F08;
+  border-left: 0.5px solid rgba(201,169,110,0.15);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  padding: 120px 3rem 3rem;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.mmt-drawer.open { transform: translateX(0); }
+
+/* Overlay */
+.mmt-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 8, 4, 0.6);
+  z-index: 39;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(2px);
+}
+.mmt-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Nav Links */
+.mmt-nav-item { overflow: hidden; }
+.mmt-nav-link {
+  display: block;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 40px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(250,247,242,0.35);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  padding: 0.4rem 0;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1), color 0.25s ease;
+}
+.mmt-drawer.open .mmt-nav-link { transform: translateY(0); }
+.mmt-nav-link:hover { color: #C9A96E; }
+
+.mmt-drawer.open .mmt-nav-item:nth-child(1) .mmt-nav-link { transition-delay: 0.08s; }
+.mmt-drawer.open .mmt-nav-item:nth-child(2) .mmt-nav-link { transition-delay: 0.13s; }
+.mmt-drawer.open .mmt-nav-item:nth-child(3) .mmt-nav-link { transition-delay: 0.18s; }
+
+/* Divider Drawer */
+.mmt-drawer-divider {
+  height: 0.5px;
+  background: rgba(201,169,110,0.15);
+  margin: 2.5rem 0;
+}
+
+/* CTA Drawer */
+.mmt-drawer-cta {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #3A2318;
+  background: #C9A96E;
+  padding: 14px 28px;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.25s;
+}
+.mmt-drawer.open .mmt-drawer-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.28s;
+}
+.mmt-drawer-cta:hover { background: #F5F0E8; }
+
+/* Di desktop, sembunyikan CTA di dalam drawer */
+@media (min-width: 641px) {
+  .mmt-drawer-cta-wrap { display: none; }
+}
+
+/* Logo Styles */
+.mmt-logo {
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+@media (max-width: 640px) {
+  .mmt-logo {
+    position: absolute !important;
+    left: unset !important;
+    right: clamp(1.5rem, 5vw, 3rem) !important;
+    transform: none !important;
+  }
+  .mmt-logo.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .mmt-logo-img {
+    height: 60px !important;
+  }
+}
+
+/* Footer Drawer */
+.mmt-drawer-footer {
+  margin-top: auto;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(250,247,242,0.2);
+  opacity: 0;
+  transition: opacity 0.4s ease 0.35s;
+}
+.mmt-drawer.open .mmt-drawer-footer { opacity: 1; }
+
+/* Container Utama */
+.menu-section {
+  position: relative;
+  width: 100%;
+  background: #3A2318;
+  overflow: hidden; /* Mencegah scroll horizontal jika ada elemen leak */
+}
+
+/* Layer 1: Sticky/Fixed Video Background */
+.menu-bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.menu-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.menu-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.menu-tint {
+  position: absolute;
+  inset: 0;
+  background: rgba(58, 35, 24, 0.2);
+}
+
+/* Layer 2: Content Wrapper */
+.menu-content {
+  position: relative;
+  z-index: 10;
+  padding-top: 100px; /* Jarak dari Header Fixed */
+  padding-bottom: 6rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Animasi Fade In Up */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Delay untuk animasi bertahap */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+
+/* Header Section Menu */
+.menu-header {
+  text-align: center;
+  margin-bottom: 5rem;
+  margin-top: 2rem;
+}
+
+.menu-label {
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #C9A96E;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.menu-divider-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0 auto 1.5rem;
+  width: 200px;
+  max-width: 60vw;
+}
+
+.menu-line {
+  flex: 1;
+  height: 0.5px;
+  background: rgba(201, 169, 110, 0.5);
+}
+
+.menu-diamond {
+  width: 5px;
+  height: 5px;
+  border: 0.5px solid #C9A96E;
+  transform: rotate(45deg);
+}
+
+.menu-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(32px, 6vw, 52px);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #FAF7F2;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.menu-subtitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(14px, 2.5vw, 18px);
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(250, 247, 242, 0.6);
+  letter-spacing: 0.05em;
+}
+
+/* Category List */
+.menu-categories {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+/* Category Header */
+.category-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.category-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 400;
+  color: #C9A96E;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.category-subtitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(13px, 2vw, 15px);
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(250, 247, 242, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.category-line {
+  width: 40px;
+  height: 0.5px;
+  background: rgba(201, 169, 110, 0.4);
+  margin: 1rem auto 0;
+}
+
+/* Menu Item Row */
+.menu-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 0.5px solid rgba(201, 169, 110, 0.15);
+}
+
+.menu-item-row:last-child {
+  border-bottom: none;
+}
+
+.menu-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-item-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(13px, 2vw, 15px);
+  font-weight: 500;
+  color: #FAF7F2;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.menu-item-desc {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(13px, 1.8vw, 15px);
+  font-weight: 300;
+  color: rgba(250, 247, 242, 0.55);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.menu-item-price {
+  flex-shrink: 0;
+  text-align: right;
+  padding-top: 0.25rem;
+}
+
+.menu-price-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(12px, 1.8vw, 14px);
+  font-weight: 400;
+  color: #C9A96E;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* Bottom Note Area */
+.menu-bottom-note {
+  text-align: center;
+  margin-top: 5rem;
+  padding-top: 3rem;
+  border-top: 0.5px solid rgba(201, 169, 110, 0.15);
+  opacity: 0;
+  transition: opacity 1s ease-out 0.8s;
+}
+.menu-bottom-note.visible {
+  opacity: 1;
+}
+
+/* --- HERO SECTION STYLES (Untuk Lazy Load) --- */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-video, .hero-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Deco Lines */
+.hero-deco-v {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 0.5px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, rgba(201,169,110,0.3) 30%, rgba(201,169,110,0.3) 70%, transparent);
+  pointer-events: none;
+}
+
+.hero-deco-h {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 0.5px;
+  transform: translateY(-50%);
+  background: linear-gradient(to right, transparent, rgba(201,169,110,0.15) 30%, rgba(201,169,110,0.15) 70%, transparent);
 }

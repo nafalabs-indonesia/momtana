@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import LoadingProvider from "./LoadingProvider"; // Import komponen client tadi
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     title: "Momtana Resto",
     description:
       "Ayam & bebek goreng laos spesial sambal mangga. Hangat, autentik, dan penuh rasa.",
-    url: "https://momtana.id", // ganti kalau domain sudah ada
+    url: "https://momtana.id", 
     siteName: "Momtana Resto",
     locale: "id_ID",
     type: "website",
@@ -73,7 +74,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
+        {/* Bungkus children dengan LoadingProvider */}
+        <LoadingProvider>
+          {children}
+        </LoadingProvider>
       </body>
     </html>
   );

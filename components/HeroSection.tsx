@@ -48,21 +48,6 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Deco line vertikal */}
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: 0,
-          bottom: 0,
-          width: "0.5px",
-          transform: "translateX(-50%)",
-          background:
-            "linear-gradient(to bottom, transparent, rgba(201,169,110,0.3) 30%, rgba(201,169,110,0.3) 70%, transparent)",
-          pointerEvents: "none",
-        }}
-      />
-
       {/* Deco line horizontal */}
       <div
         style={{
