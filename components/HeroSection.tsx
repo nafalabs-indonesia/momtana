@@ -140,7 +140,7 @@ export default function HeroSection() {
         >
           {/* Primary Button: Reservasi */}
           <a
-            href="#reservasi"
+            href="/reservasi"
             onMouseEnter={() => setIsPrimaryHovered(true)}
             onMouseLeave={() => setIsPrimaryHovered(false)}
             style={{
