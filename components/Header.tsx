@@ -291,12 +291,16 @@ export default function Header({
         </button>
 
         {/* Logo — center desktop, right mobile */}
-        <div
+        {/* DIBUNGKUS DENGAN LINK KE '/' */}
+        <Link 
+          href="/" 
           className={`mmt-logo${open ? " hidden" : ""}`}
           style={{
             position: "absolute",
             left: "50%",
             transform: "translateX(-50%)",
+            display: "block", // Memastikan link berperilaku seperti block untuk positioning
+            textDecoration: "none" // Menghilangkan garis bawah default link
           }}
         >
           {!logoError ? (
@@ -325,7 +329,7 @@ export default function Header({
               {logoFallback}
             </span>
           )}
-        </div>
+        </Link>
 
         {/* CTA — hanya desktop */}
         <Link

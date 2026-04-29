@@ -129,7 +129,7 @@ export default function MenuSection() {
       </div>
 
       <a
-        href="#menu"
+        href="/menu"
         style={{
           display: "inline-block",
           fontFamily: "'Montserrat', sans-serif",

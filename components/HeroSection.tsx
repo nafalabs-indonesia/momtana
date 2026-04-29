@@ -1,6 +1,13 @@
 "use client";
 
+import { useState } from "react";
+
 export default function HeroSection() {
+  // State untuk hover button primary (Reservasi)
+  const [isPrimaryHovered, setIsPrimaryHovered] = useState(false);
+  // State untuk hover button secondary (Menu)
+  const [isSecondaryHovered, setIsSecondaryHovered] = useState(false);
+
   return (
     <section
       id="home"
@@ -146,75 +153,52 @@ export default function HeroSection() {
             flexWrap: "wrap",
           }}
         >
+          {/* Primary Button: Reservasi */}
           <a
             href="#reservasi"
+            onMouseEnter={() => setIsPrimaryHovered(true)}
+            onMouseLeave={() => setIsPrimaryHovered(false)}
             style={{
               fontFamily: "'Montserrat', sans-serif",
               fontSize: "10px",
               letterSpacing: "0.25em",
               textTransform: "uppercase",
               color: "#3A2318",
-              background: "#C9A96E",
+              background: isPrimaryHovered ? "#F5F0E8" : "#C9A96E",
               padding: "14px 32px",
               textDecoration: "none",
               fontWeight: 500,
+              transition: "background 0.3s ease",
+              cursor: "pointer",
             }}
           >
             Reservasi Meja
           </a>
+
+          {/* Secondary Button: Lihat Menu */}
           <a
             href="#menu"
+            onMouseEnter={() => setIsSecondaryHovered(true)}
+            onMouseLeave={() => setIsSecondaryHovered(false)}
             style={{
               fontFamily: "'Montserrat', sans-serif",
               fontSize: "10px",
               letterSpacing: "0.25em",
               textTransform: "uppercase",
-              color: "#FAF7F2",
+              color: isSecondaryHovered ? "#C9A96E" : "#FAF7F2",
               background: "transparent",
               padding: "14px 32px",
               textDecoration: "none",
               fontWeight: 400,
-              border: "0.5px solid rgba(250,247,242,0.4)",
+              border: `0.5px solid ${isSecondaryHovered ? "#C9A96E" : "rgba(250,247,242,0.4)"}`,
+              transition: "all 0.3s ease",
+              cursor: "pointer",
             }}
           >
             Lihat Menu
           </a>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      {/* <div
-        style={{
-          position: "absolute",
-          bottom: "2.5rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "8px",
-          zIndex: 2,
-        }}
-      >
-        <span
-          style={{
-            fontSize: "9px",
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: "rgba(201,169,110,0.6)",
-          }}
-        >
-          Scroll
-        </span>
-        <div
-          style={{
-            width: "0.5px",
-            height: "40px",
-            background: "linear-gradient(to bottom, #C9A96E, transparent)",
-            animation: "scrollPulse 2s ease-in-out infinite",
-          }}
-        />
-      </div> */}
     </section>
   );
 }
