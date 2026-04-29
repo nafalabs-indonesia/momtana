@@ -183,7 +183,7 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll Indicator */}
-      <div
+      {/* <div
         style={{
           position: "absolute",
           bottom: "2.5rem",
@@ -214,7 +214,7 @@ export default function HeroSection() {
             animation: "scrollPulse 2s ease-in-out infinite",
           }}
         />
-      </div>
+      </div> */}
     </section>
   );
 }

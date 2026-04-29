@@ -196,9 +196,18 @@ export default function Header({
           transition: opacity 0.35s ease, visibility 0.35s ease;
         }
         @media (max-width: 640px) {
+          .mmt-logo {
+            position: absolute !important;
+            left: unset !important;
+            right: clamp(1.5rem, 5vw, 3rem) !important;
+            transform: none !important;
+          }
           .mmt-logo.hidden {
             opacity: 0;
             visibility: hidden;
+          }
+          .mmt-logo-img {
+            height: 60px !important;
           }
         }
 
@@ -281,7 +290,7 @@ export default function Header({
           <span />
         </button>
 
-        {/* Logo — center */}
+        {/* Logo — center desktop, right mobile */}
         <div
           className={`mmt-logo${open ? " hidden" : ""}`}
           style={{
@@ -298,6 +307,7 @@ export default function Header({
               height={0}
               sizes="100vw"
               priority
+              className="mmt-logo-img"
               style={{ height: "70px", width: "auto", objectFit: "contain" }}
               onError={() => setLogoError(true)}
             />
