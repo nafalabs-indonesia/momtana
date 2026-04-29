@@ -25,7 +25,7 @@ const defaultNavLinks: NavLink[] = [
 ];
 
 export default function Header({
-  logoSrc = "/momtana-cokelat.png",
+  logoSrc = "/momtana-logo.png",
   logoAlt = "Momtana",
   logoFallback = "Momtana",
   navLinks = defaultNavLinks,

@@ -3,11 +3,13 @@ import { Coffee, UtensilsCrossed, Cake } from "lucide-react"; // sesuaikan path 
 
 export default function Home() {
   return (
-    <main className="bg-[#3A2318] text-[#FAF7F2] min-h-screen" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-
+    <main
+      className="bg-[#3A2318] text-[#FAF7F2] min-h-screen"
+      style={{ fontFamily: "'Montserrat', sans-serif" }}
+    >
       {/* ── Header reusable ── */}
       <Header
-        logoSrc="/momtana-cokelat.png"
+        logoSrc="/momtana-logo.png"
         logoAlt="Momtana Restaurant"
         logoFallback="Momtana"
         navLinks={[
@@ -33,15 +35,43 @@ export default function Home() {
         }}
       >
         {/* Background */}
+        {/* <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: "url('/hero.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        /> */}
+
+        {/* Background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+        </video>
+
+        {/* Overlay gelap agar teks tetap terbaca */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "radial-gradient(ellipse at 30% 60%, rgba(92,61,46,0.5) 0%, transparent 60%), radial-gradient(ellipse at 70% 30%, rgba(201,169,110,0.08) 0%, transparent 50%), linear-gradient(170deg, #2A1810 0%, #3A2318 40%, #4A2D1E 100%)",
+            background: "rgba(0,0,0,0.5)",
           }}
         />
-
         {/* Deco lines */}
         <div
           style={{
@@ -82,11 +112,11 @@ export default function Home() {
               fontWeight: 400,
             }}
           >
-            Surakarta &mdash; Est. 2024
+            Boyolali &mdash; Est. 2024
           </p>
 
           {/* Nama restoran */}
-          <h1
+          {/* <h1
             style={{
               fontFamily: "'Cormorant Garamond', Georgia, serif",
               fontSize: "88px",
@@ -98,8 +128,8 @@ export default function Home() {
               marginBottom: "1.5rem",
             }}
           >
-            Mom<span style={{ color: "#C9A96E" }}>tana</span>
-          </h1>
+            mom<span style={{ color: "#C9A96E" }}>tana</span>
+          </h1> */}
 
           {/* Divider */}
           <div
@@ -112,9 +142,28 @@ export default function Home() {
               width: "280px",
             }}
           >
-            <div style={{ flex: 1, height: "0.5px", background: "rgba(201,169,110,0.5)" }} />
-            <div style={{ width: "5px", height: "5px", border: "0.5px solid #C9A96E", transform: "rotate(45deg)" }} />
-            <div style={{ flex: 1, height: "0.5px", background: "rgba(201,169,110,0.5)" }} />
+            <div
+              style={{
+                flex: 1,
+                height: "0.5px",
+                background: "rgba(201,169,110,0.5)",
+              }}
+            />
+            <div
+              style={{
+                width: "5px",
+                height: "5px",
+                border: "0.5px solid #C9A96E",
+                transform: "rotate(45deg)",
+              }}
+            />
+            <div
+              style={{
+                flex: 1,
+                height: "0.5px",
+                background: "rgba(201,169,110,0.5)",
+              }}
+            />
           </div>
 
           <p
@@ -131,7 +180,9 @@ export default function Home() {
             Cita rasa hangat, kenangan yang selalu kembali
           </p>
 
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
+          <div
+            style={{ display: "flex", gap: "1rem", justifyContent: "center" }}
+          >
             <a
               href="#reservasi"
               style={{
@@ -182,7 +233,14 @@ export default function Home() {
             zIndex: 2,
           }}
         >
-          <span style={{ fontSize: "9px", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(201,169,110,0.6)" }}>
+          <span
+            style={{
+              fontSize: "9px",
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "rgba(201,169,110,0.6)",
+            }}
+          >
             Scroll
           </span>
           <div
@@ -222,7 +280,14 @@ export default function Home() {
         >
           01
         </div>
-        <div style={{ width: "0.5px", height: "80px", background: "rgba(92,61,46,0.2)", flexShrink: 0 }} />
+        <div
+          style={{
+            width: "0.5px",
+            height: "80px",
+            background: "rgba(92,61,46,0.2)",
+            flexShrink: 0,
+          }}
+        />
         <div>
           <h2
             style={{
@@ -234,16 +299,41 @@ export default function Home() {
           >
             Rumah untuk setiap kesempatan
           </h2>
-          <p style={{ fontSize: "13px", lineHeight: 1.8, color: "#8B6045", maxWidth: "480px", fontWeight: 300, letterSpacing: "0.04em" }}>
-            Momtana hadir membawa kehangatan masakan rumahan yang diolah dengan bahan pilihan,
-            disajikan dalam suasana yang nyaman dan penuh cerita. Dari sarapan pagi hingga makan malam istimewa.
+          <p
+            style={{
+              fontSize: "13px",
+              lineHeight: 1.8,
+              color: "#8B6045",
+              maxWidth: "480px",
+              fontWeight: 300,
+              letterSpacing: "0.04em",
+            }}
+          >
+            Momtana hadir membawa kehangatan masakan rumahan yang diolah dengan
+            bahan pilihan, disajikan dalam suasana yang nyaman dan penuh cerita.
+            Dari sarapan pagi hingga makan malam istimewa.
           </p>
         </div>
       </section>
 
       {/* ── Menu Section ── */}
-      <section id="menu" style={{ background: "#3A2318", padding: "6rem 4rem", textAlign: "center" }}>
-        <p style={{ fontSize: "9px", letterSpacing: "0.4em", textTransform: "uppercase", color: "#C9A96E", marginBottom: "1.5rem" }}>
+      <section
+        id="menu"
+        style={{
+          background: "#3A2318",
+          padding: "6rem 4rem",
+          textAlign: "center",
+        }}
+      >
+        <p
+          style={{
+            fontSize: "9px",
+            letterSpacing: "0.4em",
+            textTransform: "uppercase",
+            color: "#C9A96E",
+            marginBottom: "1.5rem",
+          }}
+        >
           Apa yang kami sajikan
         </p>
         <h2
@@ -270,19 +360,47 @@ export default function Home() {
           }}
         >
           {[
-            { num: "01", Icon: Coffee, title: "Breakfast", desc: "Mulai hari dengan sempurna bersama sajian pagi kami yang hangat dan menyegarkan" },
-            { num: "02", Icon: UtensilsCrossed, title: "Main Course", desc: "Hidangan utama pilihan chef dengan bahan segar berkualitas dari produk lokal terbaik" },
-            { num: "03", Icon: Cake, title: "Dessert", desc: "Akhiri momen spesialmu dengan manisnya kreasi pastry ala Momtana" },
+            {
+              num: "01",
+              Icon: Coffee,
+              title: "Breakfast",
+              desc: "Mulai hari dengan sempurna bersama sajian pagi kami yang hangat dan menyegarkan",
+            },
+            {
+              num: "02",
+              Icon: UtensilsCrossed,
+              title: "Main Course",
+              desc: "Hidangan utama pilihan chef dengan bahan segar berkualitas dari produk lokal terbaik",
+            },
+            {
+              num: "03",
+              Icon: Cake,
+              title: "Dessert",
+              desc: "Akhiri momen spesialmu dengan manisnya kreasi pastry ala Momtana",
+            },
           ].map(({ num, Icon, title, desc }) => (
             <div
               key={num}
-              style={{ background: "#3A2318", padding: "2.5rem 2rem", textAlign: "left", position: "relative", overflow: "hidden", cursor: "pointer" }}
+              style={{
+                background: "#3A2318",
+                padding: "2.5rem 2rem",
+                textAlign: "left",
+                position: "relative",
+                overflow: "hidden",
+                cursor: "pointer",
+              }}
             >
               <span
                 style={{
-                  position: "absolute", top: "1rem", right: "1.5rem",
+                  position: "absolute",
+                  top: "1rem",
+                  right: "1.5rem",
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "48px", fontWeight: 300, color: "rgba(201,169,110,0.15)", fontStyle: "italic", lineHeight: 1,
+                  fontSize: "48px",
+                  fontWeight: 300,
+                  color: "rgba(201,169,110,0.15)",
+                  fontStyle: "italic",
+                  lineHeight: 1,
                 }}
               >
                 {num}
@@ -290,10 +408,27 @@ export default function Home() {
               <div style={{ marginBottom: "1rem" }}>
                 <Icon size={22} color="#C9A96E" strokeWidth={1.5} />
               </div>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "22px", fontWeight: 400, color: "#F5F0E8", marginBottom: "0.5rem", fontStyle: "italic" }}>
+              <h3
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: "22px",
+                  fontWeight: 400,
+                  color: "#F5F0E8",
+                  marginBottom: "0.5rem",
+                  fontStyle: "italic",
+                }}
+              >
                 {title}
               </h3>
-              <p style={{ fontSize: "11px", color: "rgba(250,247,242,0.5)", letterSpacing: "0.05em", lineHeight: 1.6, fontWeight: 300 }}>
+              <p
+                style={{
+                  fontSize: "11px",
+                  color: "rgba(250,247,242,0.5)",
+                  letterSpacing: "0.05em",
+                  lineHeight: 1.6,
+                  fontWeight: 300,
+                }}
+              >
                 {desc}
               </p>
             </div>
@@ -305,8 +440,14 @@ export default function Home() {
           style={{
             display: "inline-block",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: "10px", letterSpacing: "0.25em", textTransform: "uppercase",
-            color: "#3A2318", background: "#C9A96E", padding: "14px 32px", textDecoration: "none", fontWeight: 500,
+            fontSize: "10px",
+            letterSpacing: "0.25em",
+            textTransform: "uppercase",
+            color: "#3A2318",
+            background: "#C9A96E",
+            padding: "14px 32px",
+            textDecoration: "none",
+            fontWeight: 500,
           }}
         >
           Lihat Semua Menu
@@ -316,16 +457,36 @@ export default function Home() {
       {/* ── Footer ── */}
       <footer
         style={{
-          background: "#1E0F08", padding: "3rem 4rem",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
+          background: "#1E0F08",
+          padding: "3rem 4rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
           borderTop: "0.5px solid rgba(201,169,110,0.15)",
         }}
       >
-        <div style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "18px", fontWeight: 300, color: "#C9A96E", fontStyle: "italic" }}>
+        <div
+          style={{
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+            fontSize: "18px",
+            fontWeight: 300,
+            color: "#C9A96E",
+            fontStyle: "italic",
+          }}
+        >
           Momtana
         </div>
-        <div style={{ textAlign: "center", fontSize: "11px", color: "rgba(250,247,242,0.35)", letterSpacing: "0.08em", lineHeight: 1.8 }}>
-          Jl. — Solo, Jawa Tengah<br />
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: "11px",
+            color: "rgba(250,247,242,0.35)",
+            letterSpacing: "0.08em",
+            lineHeight: 1.8,
+          }}
+        >
+          Jl. — Solo, Jawa Tengah
+          <br />
           reservasi@momtana.id &nbsp;&middot;&nbsp; (0271) 000-0000
         </div>
         <div style={{ display: "flex", gap: "0.75rem" }}>
@@ -342,14 +503,27 @@ export default function Home() {
             },
           ].map(({ label, href, path }) => (
             <a
-              key={label} href={href} aria-label={label}
+              key={label}
+              href={href}
+              aria-label={label}
               style={{
-                width: "36px", height: "36px", border: "0.5px solid rgba(201,169,110,0.3)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                textDecoration: "none", flexShrink: 0,
+                width: "36px",
+                height: "36px",
+                border: "0.5px solid rgba(201,169,110,0.3)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                textDecoration: "none",
+                flexShrink: 0,
               }}
             >
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="#C9A96E" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="#C9A96E"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path d={path} />
               </svg>
             </a>
