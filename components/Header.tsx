@@ -74,15 +74,33 @@ export default function Header({
           width: 36px;
           transform: translateY(-8px) rotate(-45deg);
         }
+
+        /* CTA di header — tampil di desktop, hidden di mobile */
         .mmt-cta-header {
-          transition: background 0.25s, opacity 0.3s ease, visibility 0.3s ease !important;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 10px;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: #3A2318;
+          background: #C9A96E;
+          padding: 10px 22px;
+          text-decoration: none;
+          font-weight: 500;
+          white-space: nowrap;
+          transition: background 0.25s, opacity 0.3s ease, visibility 0.3s ease;
         }
+        .mmt-cta-header:hover { background: #F5F0E8; }
         .mmt-cta-header.hidden {
           opacity: 0;
           visibility: hidden;
           pointer-events: none;
         }
+        /* Sembunyikan CTA header di mobile */
+        @media (max-width: 640px) {
+          .mmt-cta-header { display: none; }
+        }
 
+        /* Drawer */
         .mmt-drawer {
           position: fixed;
           top: 0; right: 0;
@@ -97,10 +115,9 @@ export default function Header({
           transform: translateX(100%);
           transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
         }
-        .mmt-drawer.open {
-          transform: translateX(0);
-        }
+        .mmt-drawer.open { transform: translateX(0); }
 
+        /* Overlay */
         .mmt-overlay {
           position: fixed;
           inset: 0;
@@ -116,9 +133,8 @@ export default function Header({
           pointer-events: all;
         }
 
-        .mmt-nav-item {
-          overflow: hidden;
-        }
+        /* Nav links */
+        .mmt-nav-item { overflow: hidden; }
         .mmt-nav-link {
           display: block;
           font-family: 'Cormorant Garamond', Georgia, serif;
@@ -130,25 +146,24 @@ export default function Header({
           letter-spacing: 0.04em;
           line-height: 1.2;
           padding: 0.4rem 0;
-          transition: color 0.25s ease;
           transform: translateY(100%);
           transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1), color 0.25s ease;
         }
-        .mmt-drawer.open .mmt-nav-link {
-          transform: translateY(0);
-        }
+        .mmt-drawer.open .mmt-nav-link { transform: translateY(0); }
         .mmt-nav-link:hover { color: #C9A96E; }
 
         .mmt-drawer.open .mmt-nav-item:nth-child(1) .mmt-nav-link { transition-delay: 0.08s; }
         .mmt-drawer.open .mmt-nav-item:nth-child(2) .mmt-nav-link { transition-delay: 0.13s; }
         .mmt-drawer.open .mmt-nav-item:nth-child(3) .mmt-nav-link { transition-delay: 0.18s; }
 
+        /* Divider di dalam drawer */
         .mmt-drawer-divider {
           height: 0.5px;
           background: rgba(201,169,110,0.15);
           margin: 2.5rem 0;
         }
 
+        /* CTA di dalam drawer */
         .mmt-drawer-cta {
           font-family: 'Montserrat', sans-serif;
           font-size: 10px;
@@ -160,7 +175,6 @@ export default function Header({
           text-decoration: none;
           font-weight: 500;
           display: inline-block;
-          transition: background 0.25s;
           opacity: 0;
           transform: translateY(8px);
           transition: opacity 0.4s ease, transform 0.4s ease, background 0.25s;
@@ -172,6 +186,23 @@ export default function Header({
         }
         .mmt-drawer-cta:hover { background: #F5F0E8; }
 
+        /* Di desktop, sembunyikan CTA di dalam drawer */
+        @media (min-width: 641px) {
+          .mmt-drawer-cta-wrap { display: none; }
+        }
+
+        /* Logo fade out saat drawer terbuka — hanya mobile */
+        .mmt-logo {
+          transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+        @media (max-width: 640px) {
+          .mmt-logo.hidden {
+            opacity: 0;
+            visibility: hidden;
+          }
+        }
+
+        /* Footer drawer */
         .mmt-drawer-footer {
           margin-top: auto;
           font-family: 'Montserrat', sans-serif;
@@ -181,25 +212,7 @@ export default function Header({
           opacity: 0;
           transition: opacity 0.4s ease 0.35s;
         }
-        .mmt-drawer.open .mmt-drawer-footer {
-          opacity: 1;
-        }
-        .mmt-cta-header {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 10px;
-          letter-spacing: 0.25em;
-          text-transform: uppercase;
-          color: #3A2318;
-          background: #C9A96E;
-          padding: 10px 22px;
-          text-decoration: none;
-          font-weight: 500;
-          transition: background 0.25s;
-          white-space: nowrap;
-        }
-        .mmt-cta-header:hover {
-          background: #F5F0E8;
-        }
+        .mmt-drawer.open .mmt-drawer-footer { opacity: 1; }
       `}</style>
 
       {/* Overlay */}
@@ -226,6 +239,18 @@ export default function Header({
           </ul>
         </nav>
 
+        {/* CTA hanya muncul di dalam drawer saat mobile */}
+        <div className="mmt-drawer-cta-wrap">
+          <div className="mmt-drawer-divider" />
+          <Link
+            href={ctaHref}
+            className="mmt-drawer-cta"
+            onClick={() => setOpen(false)}
+          >
+            {ctaLabel}
+          </Link>
+        </div>
+
         <div className="mmt-drawer-footer">
           © {new Date().getFullYear()} Momtana. Solo, Jawa Tengah.
         </div>
@@ -240,12 +265,12 @@ export default function Header({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "0 3rem",
+          padding: "0 clamp(1.5rem, 5vw, 3rem)",
           height: "100px",
           background: "transparent",
         }}
       >
-        {/* ── Burger ── */}
+        {/* Burger */}
         <button
           className={`mmt-burger${open ? " open" : ""}`}
           onClick={() => setOpen((v) => !v)}
@@ -256,8 +281,9 @@ export default function Header({
           <span />
         </button>
 
-        {/* ── Center: Logo ── */}
+        {/* Logo — center */}
         <div
+          className={`mmt-logo${open ? " hidden" : ""}`}
           style={{
             position: "absolute",
             left: "50%",
@@ -272,7 +298,7 @@ export default function Header({
               height={0}
               sizes="100vw"
               priority
-              style={{ height: "80px", width: "auto", objectFit: "contain" }}
+              style={{ height: "70px", width: "auto", objectFit: "contain" }}
               onError={() => setLogoError(true)}
             />
           ) : (
@@ -282,7 +308,7 @@ export default function Header({
                 fontSize: "22px",
                 fontWeight: 300,
                 letterSpacing: "0.15em",
-                color: "#6B3E26",
+                color: "#C9A96E",
                 fontStyle: "italic",
               }}
             >
@@ -291,8 +317,11 @@ export default function Header({
           )}
         </div>
 
-        {/* ── Right: CTA ── */}
-        <Link href={ctaHref} className={`mmt-cta-header${open ? " hidden" : ""}`}>
+        {/* CTA — hanya desktop */}
+        <Link
+          href={ctaHref}
+          className={`mmt-cta-header${open ? " hidden" : ""}`}
+        >
           {ctaLabel}
         </Link>
       </header>
