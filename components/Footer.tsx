@@ -19,82 +19,180 @@ export default function Footer() {
       className="site-footer"
       style={{
         background: "#1E0F08",
-        padding: "3rem clamp(1.5rem, 6vw, 4rem)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
+        padding: "3rem clamp(1.5rem, 5vw, 4rem)",
         borderTop: "0.5px solid rgba(201,169,110,0.15)",
-        gap: "2rem",
-        flexWrap: "wrap",
+        color: "rgba(250,247,242,0.8)",
       }}
     >
-      {/* Logo */}
-      <div style={{ flexShrink: 0 }}>
-        <Image
-          src="/momtana-logo.png"
-          alt="Momtana"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ height: "60px", width: "auto", objectFit: "contain" }}
-        />
-      </div>
-
-      {/* Contact */}
       <div
+        className="footer-content"
         style={{
-          textAlign: "center",
-          fontSize: "11px",
-          color: "rgba(250,247,242,0.35)",
-          letterSpacing: "0.08em",
-          lineHeight: 1.8,
+          maxWidth: "1200px",
+          margin: "0 auto",
+          display: "flex",
+          justifyContent: "space-between", // Logo di kiri mentok, Wrapper di kanan mentok
+          alignItems: "flex-start",
+          gap: "3rem",
         }}
       >
-        Jl. — Solo, Jawa Tengah
-        <br />
-        reservasi@momtana.id &nbsp;&middot;&nbsp; (0271) 000-0000
-      </div>
+        {/* 1. LOGO (Kiri) */}
+        <div className="footer-logo">
+          <Image
+            src="/momtana-logo.png"
+            alt="Momtana"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ height: "50px", width: "auto", objectFit: "contain" }}
+          />
+        </div>
 
-      {/* Social Icons */}
-      <div style={{ display: "flex", gap: "0.75rem" }}>
-        {socialLinks.map(({ label, href, path }) => (
-          <a
-            key={label}
-            href={href}
-            aria-label={label}
-            style={{
-              width: "36px",
-              height: "36px",
-              border: "0.5px solid rgba(201,169,110,0.3)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textDecoration: "none",
-              flexShrink: 0,
-            }}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              width="16"
-              height="16"
-              fill="#C9A96E"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d={path} />
-            </svg>
-          </a>
-        ))}
+        {/* 2. INFO WRAPPER (Berisi Hours, Contact, Socials) */}
+        <div 
+          className="footer-info-wrapper"
+          style={{
+            display: "flex",
+            flex: 1,
+            justifyContent: "flex-start", // Default: item nempel kiri
+            alignItems: "flex-start",
+            gap: "3rem",
+            flexWrap: "wrap"
+          }}
+        >
+          
+          {/* Kolom A: Jam Buka */}
+          <div className="footer-col hours">
+            <h4 style={styles.heading}>Opening Hours</h4>
+            <div style={styles.textGroup}>
+              <strong style={styles.subHeading}>Breakfast</strong>
+              <p>Sat - Sun: 8am - 11am</p>
+              <p>Public Holiday: 8am - 11am</p>
+            </div>
+            <div style={{...styles.textGroup, marginTop: '10px'}}>
+              <strong style={styles.subHeading}>Lunch & Dinner</strong>
+              <p>Mon - Fri: 10am - 10pm</p>
+              <p>Sat - Sun: 10am - 10pm</p>
+            </div>
+          </div>
+
+          {/* Kolom B: Kontak & Lokasi */}
+          <div className="footer-col contact-loc">
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h4 style={styles.heading}>Contact</h4>
+              <p style={styles.text}>0271 8082 1338</p>
+              <p style={styles.text}>0813 7520 2828</p>
+            </div>
+            
+            <div>
+              <h4 style={styles.heading}>Location</h4>
+              <p style={styles.text}>
+                Jln. Waduk Cengklik KM 1<br />
+                Boyolali, Jawa Tengah, Indonesia
+              </p>
+            </div>
+          </div>
+
+          {/* Kolom C: Sosmed (Paling Kanan di Desktop) */}
+          {/* margin-left: auto akan mendorong elemen ini ke ujung kanan container parentnya */}
+          <div className="footer-col socials" style={{ marginLeft: 'auto', minWidth: '100px' }}>
+             <div style={{ display: "flex", gap: "0.75rem", marginTop: "28px" }}>
+              {socialLinks.map(({ label, href, path }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  style={styles.socialIcon}
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#C9A96E">
+                    <path d={path} />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <style>{`
-        @media (max-width: 600px) {
-          .site-footer {
+        /* Responsive Mobile */
+        @media (max-width: 900px) {
+          .footer-content {
             flex-direction: column;
             align-items: center;
             text-align: center;
+            gap: 2.5rem;
+          }
+
+          /* Logo Center di Mobile */
+          .footer-logo {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+          }
+
+          .footer-info-wrapper {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 2rem;
+            justify-content: center; /* Reset alignment */
+          }
+
+          .footer-col {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+          /* Hapus margin auto desktop agar sosmed kembali ke tengah di mobile */
+          .footer-col.socials {
+            margin-left: 0 !important;
+            margin-top: 1rem;
           }
         }
       `}</style>
     </footer>
   );
 }
+
+// Helper styles
+const styles = {
+  heading: {
+    fontSize: "12px",
+    textTransform: "uppercase" as const,
+    letterSpacing: "0.1em",
+    color: "#C9A96E",
+    margin: "0 0 0.75rem 0",
+    fontWeight: 600,
+  },
+  subHeading: {
+    color: "rgba(250,247,242,0.9)",
+    fontSize: "12px",
+    display: "block",
+    marginBottom: "2px",
+  },
+  text: {
+    fontSize: "12px",
+    lineHeight: "1.6",
+    color: "rgba(250,247,242,0.6)",
+    margin: "0 0 4px 0",
+  },
+  textGroup: {
+    fontSize: "12px",
+    lineHeight: "1.5",
+    color: "rgba(250,247,242,0.6)",
+    margin: 0,
+  },
+  socialIcon: {
+    width: "36px",
+    height: "36px",
+    border: "0.5px solid rgba(201,169,110,0.3)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textDecoration: "none",
+    transition: "background 0.2s",
+  },
+};
