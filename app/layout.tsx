@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: "Momtana Resto",
     description:
       "Ayam & bebek goreng laos spesial sambal mangga. Hangat, autentik, dan penuh rasa.",
-    url: "https://momtana.id", 
+    url: "https://momtana.vercel.app", 
     siteName: "Momtana Resto",
     locale: "id_ID",
     type: "website",
