@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Momtana Resto",
+    default: "Momtana Resto - Ayam & bebek goreng laos spesial sambal mangga",
     template: "%s | Momtana Resto",
   },
   description:
